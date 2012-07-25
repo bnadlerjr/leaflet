@@ -1,6 +1,6 @@
 = Leaflet
 Example Sinatra web application that models an online book store. A working example
-can be eventually found at http://leaflet.heroku.com
+can be found at http://leaflet.heroku.com
 
 Author:: Bob Nadler, Jr. (bnadler@cyrusinnovation.com)
 
