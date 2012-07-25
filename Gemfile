@@ -10,9 +10,10 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 1.1.2"
-  gem "contest",  "~> 0.1.3"
-  gem "flay",     "~> 1.4.3"
-  gem "flog",     "~> 2.5.3"
-  gem "launchy",  "~> 2.1.0"
+  gem "capybara",           "~> 1.1.2"
+  gem "contest",            "~> 0.1.3"
+  gem "flay",               "~> 1.4.3"
+  gem "flog",               "~> 2.5.3"
+  gem "launchy",            "~> 2.1.0"
+  gem "minitest-reporters", "~> 0.9.0"
 end
