@@ -1,0 +1,12 @@
+!!! 5
+%html
+  %head
+    %title Leaflet
+  %body
+    %h1 Book Catalog
+    %ul
+      - @catalog.each do |book|
+        %li
+          = book['title']
+          = "Price: $#{book['price']}"
+          %p= book['description']

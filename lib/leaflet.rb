@@ -3,7 +3,11 @@ require "sinatra/base"
 module Leaflet
   class Server < Sinatra::Base
     get '/' do
-      "Hello World!"
+      @catalog = settings.catalog.find_all do |book|
+        book['status'] == 'active'
+      end.to_enum
+
+      haml :catalog
     end
   end
 end

@@ -14,12 +14,6 @@ module Leaflet
   class ServerTest < Test::Unit::TestCase
     include Rack::Test::Methods
 
-    test "hookup" do
-      get '/'
-      assert_response(:ok)
-      assert_body_contains("Hello World!")
-    end
-
     private
 
     def app
