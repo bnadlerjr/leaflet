@@ -1,0 +1,23 @@
+#catalog {
+  h2 {
+    padding: 0.25em;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    .info {
+      background-color: #EDE4D4;
+      border: 1px solid #000;
+      float: left;
+      margin-right: 0.5em;
+      padding: 1em;
+      padding-top: 0;
+      text-align: center;
+    }
+  }
+}

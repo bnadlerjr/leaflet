@@ -1,42 +1,10 @@
-ENV['RACK_ENV'] = 'test'
-
-require "test/unit"
-require "contest"
-
-require 'minitest/reporters'
-MiniTest::Reporters.use!
-
-require "capybara"
-require "capybara/dsl"
+require_relative "../test_helper"
+require_relative "acceptance_helper"
 
 require_relative "../../lib/leaflet"
 
 module Leaflet
-  class BrowseCatalogTest < Test::Unit::TestCase
-    include Capybara::DSL
-
-    setup do
-      Capybara.app = Leaflet::Server
-
-      Capybara.app.set :catalog, [
-          { 'title'       => 'The Well-Grounded Rubyist',
-            'description' => 'This is an awesome book!',
-            'price'       => 44.99,
-            'status'      => 'active'
-          },
-          { 'title'       => 'Eloquent Ruby',
-            'description' => 'Another awesome book about Ruby!',
-            'price'       => 30.67,
-            'status'      => 'inactive'
-          }
-      ]
-    end
-
-    teardown do
-      Capybara.reset_sessions!
-      Capybara.use_default_driver
-    end
-
+  class BrowseCatalogTest < AcceptanceTest
     # Given I am not an admin
     #   And "The Well-Grounded Rubyist" is in the catalog
     # When I go to the home page

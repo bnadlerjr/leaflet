@@ -1,11 +1,4 @@
-ENV['RACK_ENV'] = 'test'
-
-require "test/unit"
-require "contest"
-
-require 'minitest/reporters'
-MiniTest::Reporters.use!
-
+require_relative "test_helper"
 require "rack/test"
 
 require_relative "../lib/leaflet"
@@ -13,6 +6,12 @@ require_relative "../lib/leaflet"
 module Leaflet
   class ServerTest < Test::Unit::TestCase
     include Rack::Test::Methods
+
+    test "GET '/'" do
+      get '/'
+      assert_response :ok
+      assert_body_contains "Leaflet"
+    end
 
     private
 

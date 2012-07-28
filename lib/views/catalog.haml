@@ -1,12 +1,9 @@
-!!! 5
-%html
-  %head
-    %title Leaflet
-  %body
-    %h1 Book Catalog
-    %ul
-      - @catalog.each do |book|
-        %li
-          = book['title']
-          = "Price: $#{book['price']}"
-          %p= book['description']
+#catalog
+  %ul
+    - @catalog.each do |book|
+      %li
+        %h2.ui-state-default.ui-corner-all= book['title']
+        .info.ui-corner-all
+          %p= "Price: $#{book['price']}"
+          %a(href="#")Add to Cart
+        %p.ui-helper-clearfix= book['description']
