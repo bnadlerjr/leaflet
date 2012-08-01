@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 
-gem "haml",      "~> 3.1.6"
-gem "sass",      "~> 3.1.20"
-gem "sinatra",   "~> 1.3.2"
-gem "sprockets", "~> 2.4.4"
-gem "thin",      "~> 1.4.1"
+gem "haml",          "~> 3.1.6"
+gem "sinatra-flash", "~> 0.3.0"
+gem "sass",          "~> 3.1.20"
+gem "sinatra",       "~> 1.3.2"
+gem "sprockets",     "~> 2.4.4"
+gem "thin",          "~> 1.4.1"
 
 group :development do
   gem "rake", "~> 0.9.2"

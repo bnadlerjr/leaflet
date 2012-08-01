@@ -1,7 +1,4 @@
-require_relative "../test_helper"
 require_relative "acceptance_helper"
-
-require_relative "../../lib/leaflet"
 
 module Leaflet
   class BrowseCatalogTest < AcceptanceTest

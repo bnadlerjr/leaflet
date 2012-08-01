@@ -1,0 +1,15 @@
+- if @errors
+  %ul
+    - @errors.each do |e|
+      %li= e
+%form(action="/books" method="post" )
+  .ui-widget
+    %label(for="book-title")Title
+    %input(type="text" id="book-title" name="book[title]")
+  .ui-widget
+    %label(for="book-description")Description
+    %input(type="text" id="book-description" name="book[description]")
+  .ui-widget
+    %label(for="book-price")Price
+    %input(type="text" id="book-price" name="book[price]")
+  %input(type="submit" value="Add Book")

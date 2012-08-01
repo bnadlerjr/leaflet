@@ -3,8 +3,8 @@
   %head
     %meta(charset="utf-8")
     %title Leaflet
-    %link(type="text/css" href="assets/styles.css" rel="stylesheet")
-    %script(type="text/javascript" src="assets/app.js")
+    %link(type="text/css" href="/assets/styles.css" rel="stylesheet")
+    %script(type="text/javascript" src="/assets/app.js")
   %body
     %header.ui-widget-header
       %h1 Leaflet
@@ -12,7 +12,10 @@
         %ul
           %li
             %a(href="/")Catalog
+          %li
+            %a(href="/books/new")Manage Catalog
     .content.ui-widget-content
+      = styled_flash
       = yield
     %footer.ui-widget-content
       %p
