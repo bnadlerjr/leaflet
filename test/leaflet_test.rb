@@ -8,6 +8,7 @@ module Leaflet
     include Rack::Test::Methods
 
     test "GET '/'" do
+      app.set :catalog, []
       get '/'
       assert_response :ok
       assert_body_contains "Leaflet"
