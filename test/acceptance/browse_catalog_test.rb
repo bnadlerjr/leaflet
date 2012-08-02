@@ -29,5 +29,17 @@ module Leaflet
       assert(!page.has_content?("Eloquent Ruby"),
         "did not expect to see 'Eloquent Ruby' on the page")
     end
+
+    # Given I am an admin
+    #  And an 'inactive' book is in the catalog
+    # When I go to the home page
+    # Then I should see the inactive book
+    test "admin browsing catalog should see 'inactive' books" do
+      page.driver.browser.basic_authorize('admin', 'secret')
+      visit '/'
+
+      assert(page.has_content?("Eloquent Ruby"),
+        "expected to see 'Eloquent Ruby' on the page")
+    end
   end
 end

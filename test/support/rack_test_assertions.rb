@@ -1,6 +1,13 @@
 module Rack
   module Test
     module Assertions
+      RESPONSE_CODES = {
+        :ok             => 200,
+        :not_authorized => 401,
+        :not_found      => 404,
+        :redirect       => 302
+      }
+
       def assert_flash_message(expected, type=:notice, message=nil)
         assert_flash(type, message)
         flash = last_request.env['rack.session']['flash'][type.to_s]
@@ -18,9 +25,16 @@ module Rack
       end
 
       def assert_response(expected, message=nil)
-        msg = build_message(message, "expected last response to be <?> but was <?>", expected, last_response.status)
+        status = last_response.status
+        msg = build_message(
+          message,
+          "expected last response to be <?> but was <?>",
+          "#{RESPONSE_CODES[expected]}:#{expected}",
+          "#{status}:#{RESPONSE_CODES.key(status)}"
+        )
+
         assert_block(msg) do
-          last_response.send("#{expected}?")
+          status == RESPONSE_CODES[expected]
         end
       end
 

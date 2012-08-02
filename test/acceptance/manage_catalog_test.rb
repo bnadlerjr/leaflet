@@ -23,5 +23,16 @@ module Leaflet
       assert(page.has_content?('My New Book'),
         "expected to see 'My New Book' in the catalog")
     end
+
+    # Given I am not an admin
+    # When I go to the Manage Catalog page
+    # Then I should see a message telling me I'm not authorized
+    test "non-admin attempts to add book" do
+      visit '/'
+      click_on 'Manage Catalog'
+
+      assert(page.has_content?('Not authorized'),
+        'expected to see a not authorized message')
+    end
   end
 end
