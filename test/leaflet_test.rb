@@ -33,18 +33,18 @@ module Leaflet
       end
 
       test "successful POST /books" do
-        post '/books', 'book' => book_params
+        post '/books', 'book' => Fakes.book_params
 
         assert_response :redirect
         assert_flash_message 'Successfully added book.'
-        assert_includes(app.catalog, book_params.merge('status' => 'active'))
+        assert_includes(app.catalog, Fakes.book_params.merge('status' => 'active'))
 
         follow_redirect!
-        assert_body_contains(book_params['title'])
+        assert_body_contains(Fakes.book_params['title'])
       end
 
       test "unsuccessful POST /books" do
-        invalid_book_params = book_params('title' => '')
+        invalid_book_params = Fakes.book_params('title' => '')
 
         post '/books', 'book' => invalid_book_params
 
@@ -64,10 +64,10 @@ module Leaflet
       end
 
       test "POST /books" do
-        post '/books', 'book' => book_params
+        post '/books', 'book' => Fakes.book_params
 
         assert_response :not_authorized
-        assert_not_include(app.catalog, book_params)
+        assert_not_include(app.catalog, Fakes.book_params)
         assert_body_contains('Not authorized')
       end
     end
@@ -76,14 +76,6 @@ module Leaflet
 
     def app
       Leaflet::Server
-    end
-
-    def book_params(attributes={})
-      {
-        'title' => 'Some Book',
-        'description' => 'A description of the book.',
-        'price'       => '9.99'
-      }.merge(attributes)
     end
   end
 end

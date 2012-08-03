@@ -5,3 +5,5 @@ require "contest"
 
 require 'minitest/reporters'
 MiniTest::Reporters.use!
+
+require_relative 'support/fakes'

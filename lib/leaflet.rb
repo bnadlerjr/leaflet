@@ -23,7 +23,7 @@ module Leaflet
     end
 
     get '/' do
-      @catalog = if authorized?
+      catalog = if authorized?
         settings.catalog.to_enum
       else
         settings.catalog.find_all do |book|
@@ -31,12 +31,12 @@ module Leaflet
         end.to_enum
       end
 
-      haml :catalog
+      haml :'books/index', :locals => { :catalog => catalog }
     end
 
     get '/books/new' do
       protected!
-      haml :new_book
+      haml :'books/new', :locals => { :errors => nil }
     end
 
     post '/books' do
@@ -47,8 +47,7 @@ module Leaflet
         settings.catalog << params['book'].merge('status' => 'active')
         redirect '/'
       else
-        @errors = validator.errors.full_messages
-        haml :new_book
+        haml :'books/new', :locals => { :errors => validator.errors.full_messages }
       end
     end
   end
