@@ -33,6 +33,7 @@ FlayTask.new do |t|
   t.dirs = %w[lib]
 end
 
+desc 'Analyze code using ABC metric'
 task :flog do
   flog = Flog.new
   flog.flog ['lib']
