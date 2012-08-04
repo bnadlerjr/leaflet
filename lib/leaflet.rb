@@ -3,6 +3,7 @@ require "sinatra/flash"
 
 require_relative 'leaflet/book_validator'
 require_relative 'leaflet/authorization'
+require_relative 'leaflet/view_catalog'
 require_relative 'leaflet/core_ext/hash_ext'
 
 module Leaflet
@@ -20,14 +21,7 @@ module Leaflet
     end
 
     get '/' do
-      catalog = if authorization.admin?
-        settings.catalog.to_enum
-      else
-        settings.catalog.find_all do |book|
-          book[:status] == 'active'
-        end.to_enum
-      end
-
+      catalog = ViewCatalog.call(authorization, settings.catalog)
       haml :'books/index', :locals => { :catalog => catalog }
     end
 

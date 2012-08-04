@@ -24,5 +24,6 @@ group :test do
   gem "flay",               "~> 1.4.3"
   gem "flog",               "~> 2.5.3"
   gem "launchy",            "~> 2.1.0"
+  gem "mocha",              "~> 0.12.2"
   gem "minitest-reporters", "~> 0.9.0"
 end
