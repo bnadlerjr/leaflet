@@ -46,7 +46,7 @@ module Leaflet
       if validator.valid?
         flash['notice'] = 'Successfully added book.'
         settings.catalog << params['book'].merge('status' => 'active').extend(CoreExt::HashExt).symbolize_keys!
-        redirect '/'
+        redirect to('/')
       else
         haml :'books/new', :locals => { :errors => validator.errors.full_messages }
       end

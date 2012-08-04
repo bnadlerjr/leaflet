@@ -3,7 +3,7 @@
   %ul
     - errors.each do |e|
       %li= e
-%form(action="/books" method="post" )
+%form(action="#{url('/books')}" method="post")
   .ui-widget
     %label(for="book-title")Title
     %input(type="text" id="book-title" name="book[title]")

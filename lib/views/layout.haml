@@ -11,9 +11,9 @@
       %nav
         %ul
           %li
-            %a(href="/")Catalog
+            %a(href="#{url('/')}")Catalog
           %li
-            %a(href="/books/new")Manage Catalog
+            %a(href="#{url('/books/new')}")Manage Catalog
     .content.ui-widget-content
       = styled_flash
       = yield
