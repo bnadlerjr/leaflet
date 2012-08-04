@@ -1,10 +1,9 @@
 require "sinatra/base"
 require "sinatra/flash"
 
-require_relative 'leaflet/book_validator'
 require_relative 'leaflet/authorization'
 require_relative 'leaflet/view_catalog'
-require_relative 'leaflet/core_ext/hash_ext'
+require_relative 'leaflet/add_book_to_catalog'
 
 module Leaflet
   class Server < Sinatra::Base
@@ -33,14 +32,12 @@ module Leaflet
 
     post '/books' do
       authorization.protect do
-        validator = BookValidator.new(params['book'])
-        if validator.valid?
-          flash['notice'] = 'Successfully added book.'
-          settings.catalog << params['book'].merge('status' => 'active').extend(CoreExt::HashExt).symbolize_keys!
-          redirect to('/')
-        else
-          haml :'books/new', :locals => { :errors => validator.errors.full_messages }
+        AddBookToCatalog.call(settings.catalog, params['book']) do |errors|
+          halt haml(:'books/new', :locals => { :errors => errors })
         end
+
+        flash['notice'] = 'Successfully added book.'
+        redirect to('/')
       end
     end
   end
