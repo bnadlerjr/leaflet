@@ -35,9 +35,11 @@ module Leaflet
       test "successful POST /books" do
         post '/books', 'book' => Fakes.book_params
 
+        expected = Fakes.book_params.merge(:status => 'active').extend(CoreExt::HashExt).symbolize_keys
+
         assert_response :redirect
         assert_flash_message 'Successfully added book.'
-        assert_includes(app.catalog, Fakes.book_params.merge('status' => 'active'))
+        assert_includes(app.catalog, expected)
 
         follow_redirect!
         assert_body_contains(Fakes.book_params['title'])

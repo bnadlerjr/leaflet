@@ -2,6 +2,7 @@ require "sinatra/base"
 require "sinatra/flash"
 
 require_relative 'leaflet/book_validator'
+require_relative 'leaflet/core_ext/hash_ext'
 
 module Leaflet
   class Server < Sinatra::Base
@@ -27,7 +28,7 @@ module Leaflet
         settings.catalog.to_enum
       else
         settings.catalog.find_all do |book|
-          book['status'] == 'active'
+          book[:status] == 'active'
         end.to_enum
       end
 
@@ -44,7 +45,7 @@ module Leaflet
       validator = BookValidator.new(params['book'])
       if validator.valid?
         flash['notice'] = 'Successfully added book.'
-        settings.catalog << params['book'].merge('status' => 'active')
+        settings.catalog << params['book'].merge('status' => 'active').extend(CoreExt::HashExt).symbolize_keys!
         redirect '/'
       else
         haml :'books/new', :locals => { :errors => validator.errors.full_messages }
