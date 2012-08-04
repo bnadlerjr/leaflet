@@ -2,6 +2,7 @@ require "sinatra/base"
 require "sinatra/flash"
 
 require_relative 'leaflet/book_validator'
+require_relative 'leaflet/authorization'
 require_relative 'leaflet/core_ext/hash_ext'
 
 module Leaflet
@@ -10,13 +11,8 @@ module Leaflet
     register Sinatra::Flash
 
     helpers do
-      def authorized?
-        @auth ||= Rack::Auth::Basic::Request.new(env)
-        @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', 'secret']
-      end
-
-      def protected!
-        unless authorized?
+      def authorization
+        @authorization ||= Authorization.new(env) do
           response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
           throw(:halt, [401, "Not authorized\n"])
         end
@@ -24,7 +20,7 @@ module Leaflet
     end
 
     get '/' do
-      catalog = if authorized?
+      catalog = if authorization.admin?
         settings.catalog.to_enum
       else
         settings.catalog.find_all do |book|
@@ -36,19 +32,21 @@ module Leaflet
     end
 
     get '/books/new' do
-      protected!
-      haml :'books/new', :locals => { :errors => nil }
+      authorization.protect do
+        haml :'books/new', :locals => { :errors => nil }
+      end
     end
 
     post '/books' do
-      protected!
-      validator = BookValidator.new(params['book'])
-      if validator.valid?
-        flash['notice'] = 'Successfully added book.'
-        settings.catalog << params['book'].merge('status' => 'active').extend(CoreExt::HashExt).symbolize_keys!
-        redirect to('/')
-      else
-        haml :'books/new', :locals => { :errors => validator.errors.full_messages }
+      authorization.protect do
+        validator = BookValidator.new(params['book'])
+        if validator.valid?
+          flash['notice'] = 'Successfully added book.'
+          settings.catalog << params['book'].merge('status' => 'active').extend(CoreExt::HashExt).symbolize_keys!
+          redirect to('/')
+        else
+          haml :'books/new', :locals => { :errors => validator.errors.full_messages }
+        end
       end
     end
   end
