@@ -9,13 +9,12 @@ map '/assets' do
   run env
 end
 
-require "csv"
-opts = {
-  :headers    => true,
-  :converters => :all
-}
-books = CSV.read("./data/books.csv", opts).map { |row| row.to_hash }
+require 'sequel'
+url = ENV['DATABASE_URL'] || 'sqlite://db/development.sqlite3'
+DB = Sequel.connect(url)
+Sequel.extension :migration
+Sequel::Migrator.check_current(DB, 'db/migrate')
 
 app = Leaflet::Server
-app.set :catalog, books
+app.set :catalog, DB[:books]
 run app
