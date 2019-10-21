@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem "haml",          "~> 3.1.6"
+gem "haml",          "~> 5.0.0"
 gem "sinatra-flash", "~> 0.3.0"
 gem "sass",          "~> 3.1.20"
 gem "sequel",        "~> 3.38.0"
