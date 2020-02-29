@@ -14,7 +14,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "rake", "~> 0.9.2"
+  gem "rake", "~> 12.3.3"
   gem "rdoc", "~> 3.12"
 end
 
